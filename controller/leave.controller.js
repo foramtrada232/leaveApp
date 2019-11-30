@@ -359,8 +359,11 @@ crontab.scheduleJob('0 30 11 * * *', tomorrowNotPresentUserList = () => {
 		else if (leaveDate.month < 10) {
 			leaveDate['month'] = 0 + leaveDate.month
 		}
+		tomorrowDate = leaveDate.date +'-'+ leaveDate.month +'-'+ leaveDate.year;
+		console.log("*******************************************************",leaveDate)
 		console.log("Month:", leaveDate.month);
-		LeaveModel.find({ 'date.year': leaveDate.year, 'date.month': leaveDate.month, 'date.date': leaveDate.date, 'status': 'Approved' })
+		LeaveModel.find({totalDate : {$in : [tomorrowDate]}, 'status': 'Approved' })
+		// LeaveModel.find({ 'date.year': leaveDate.year, 'date.month': leaveDate.month, 'date.date': leaveDate.date, 'status': 'Approved' })
 			.exec((err, leave) => {
 				if (err) {
 					console.log("err:", err)
